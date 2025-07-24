@@ -3,6 +3,9 @@ import { Search, Filter, ExternalLink, TrendingUp, Users, Zap } from "lucide-rea
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Tag, TagGroup, TagList } from "@/components/ui/tag-group";
+import { Label } from "@/components/ui/field";
+import { Footer } from "@/components/Footer";
 
 const Portfolio = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -78,119 +81,111 @@ const Portfolio = () => {
   const filteredItems = useMemo(() => {
     return portfolioItems.filter(item => {
       const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           item.tech.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()));
+                          item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          item.tech.some(tech => tech.toLowerCase().includes(searchTerm.toLowerCase()));
       const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
       const matchesStyle = selectedStyle === "All" || item.style === selectedStyle;
       
       return matchesSearch && matchesCategory && matchesStyle;
     });
-  }, [searchTerm, selectedCategory, selectedStyle]);
-
-  const stats = [
-    { icon: TrendingUp, value: "$16M+", label: "Incremental Revenue Generated" },
-    { icon: Zap, value: "< 3 Weeks", label: "Average Delivery Time" },
-    { icon: Users, value: "100+", label: "Successful Projects" }
-  ];
+  }, [searchTerm, selectedCategory, selectedStyle, portfolioItems]);
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-skin-beige dark:bg-gray-900">
       {/* Hero Section */}
       <section className="relative bg-skin-beige dark:bg-gray-900 pt-32 pb-16">
-        <div className="max-w-6xl mx-auto px-8">
-          <div className="text-center">
-            <h1 className="font-futura text-5xl md:text-6xl uppercase tracking-tight text-foreground mb-6">
-              Our Portfolio
-            </h1>
-            <p className="font-manrope text-xl text-muted-foreground max-w-3xl mx-auto">
-              Showcasing exceptional results across industries with our premium solutions
-            </p>
-          </div>
+        <div className="max-w-6xl mx-auto px-8 text-center">
+          <h1 className="font-futura text-5xl md:text-6xl uppercase tracking-tight text-foreground mb-6">
+            Featured Projects
+          </h1>
+          <p className="font-manrope text-xl text-muted-foreground max-w-3xl mx-auto mb-12">
+            Real results for real businesses across various industries
+          </p>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-24 px-8 bg-teal dark:bg-electric-blue text-white">
+      {/* Search and Filters Section */}
+      <section className="py-12 px-8 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center space-y-4">
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 mb-4">
-                  <stat.icon className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="font-manrope text-3xl font-bold">
-                  {stat.value}
-                </h3>
-                <p className="font-manrope text-white/90">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Search and Filters */}
-      <section className="py-16 px-8 bg-skin-beige dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-manrope text-4xl font-bold text-foreground mb-4">
-              Featured Projects
-            </h2>
-            <p className="font-manrope text-lg text-muted-foreground">
-              Real results for real businesses across various industries
-            </p>
-          </div>
-
           {/* Search Bar */}
-          <div className="relative max-w-md mx-auto mb-8">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-            <Input
-              type="text"
-              placeholder="Search projects by name, tech, or description..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 py-3 bg-card border-border rounded-xl font-manrope"
-            />
+          <div className="mb-8">
+            <div className="relative max-w-md mx-auto">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+              <Input
+                type="text"
+                placeholder="Search projects by name, tech, or description..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 font-manrope bg-background border-border"
+              />
+            </div>
           </div>
 
-          {/* Filter Buttons */}
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-center">
-            {/* Category Filters */}
-            <div className="flex flex-wrap gap-2 items-center">
-              <span className="font-manrope text-sm font-semibold text-foreground mr-2">Category:</span>
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                  className="rounded-full font-manrope"
-                >
-                  {category}
-                </Button>
-              ))}
+          {/* Beautiful Tag Filters */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {/* Category Filter */}
+            <div className="space-y-3">
+              <TagGroup 
+                selectionMode="single" 
+                selectedKeys={new Set([selectedCategory])}
+                onSelectionChange={(keys) => {
+                  const selected = Array.from(keys)[0] as string;
+                  setSelectedCategory(selected || "All");
+                }}
+                className="space-y-3"
+              >
+                <Label className="font-manrope text-lg font-semibold text-foreground">Category:</Label>
+                <TagList className="flex flex-wrap gap-2">
+                  {categories.map((category) => (
+                    <Tag 
+                      key={category} 
+                      id={category}
+                      className={`cursor-pointer font-manrope px-4 py-2 rounded-full border transition-all duration-200 ${
+                        selectedCategory === category
+                          ? 'bg-teal text-white border-teal shadow-md transform scale-105'
+                          : 'bg-background text-foreground border-border hover:border-teal hover:bg-teal/10'
+                      }`}
+                    >
+                      {category}
+                    </Tag>
+                  ))}
+                </TagList>
+              </TagGroup>
             </div>
 
-            {/* Style Filters */}
-            <div className="flex flex-wrap gap-2 items-center">
-              <span className="font-manrope text-sm font-semibold text-foreground mr-2">Style:</span>
-              {styles.map((style) => (
-                <Button
-                  key={style}
-                  variant={selectedStyle === style ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedStyle(style)}
-                  className="rounded-full font-manrope"
-                >
-                  {style}
-                </Button>
-              ))}
+            {/* Style Filter */}
+            <div className="space-y-3">
+              <TagGroup 
+                selectionMode="single" 
+                selectedKeys={new Set([selectedStyle])}
+                onSelectionChange={(keys) => {
+                  const selected = Array.from(keys)[0] as string;
+                  setSelectedStyle(selected || "All");
+                }}
+                className="space-y-3"
+              >
+                <Label className="font-manrope text-lg font-semibold text-foreground">Style:</Label>
+                <TagList className="flex flex-wrap gap-2">
+                  {styles.map((style) => (
+                    <Tag 
+                      key={style} 
+                      id={style}
+                      className={`cursor-pointer font-manrope px-4 py-2 rounded-full border transition-all duration-200 ${
+                        selectedStyle === style
+                          ? 'bg-teal text-white border-teal shadow-md transform scale-105'
+                          : 'bg-background text-foreground border-border hover:border-teal hover:bg-teal/10'
+                      }`}
+                    >
+                      {style}
+                    </Tag>
+                  ))}
+                </TagList>
+              </TagGroup>
             </div>
           </div>
 
           {/* Results Count */}
-          <div className="text-center mt-6">
+          <div className="flex justify-center mb-8">
             <p className="font-manrope text-muted-foreground">
               Showing {filteredItems.length} of {portfolioItems.length} projects
             </p>
@@ -199,61 +194,52 @@ const Portfolio = () => {
       </section>
 
       {/* Portfolio Grid */}
-      <section className="py-24 px-8 bg-skin-beige dark:bg-gray-900">
+      <section className="py-16 px-8 bg-skin-beige dark:bg-gray-900">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredItems.map((item) => (
-              <div
-                key={item.id}
-                className="group bg-card rounded-2xl shadow-luxury hover:shadow-neon transition-all duration-500 overflow-hidden h-full flex flex-col"
-              >
+              <div key={item.id} className="bg-card rounded-2xl overflow-hidden shadow-luxury hover:shadow-neon transition-all duration-500 h-full flex flex-col group">
                 {/* Project Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative overflow-hidden h-48">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                  
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
-                    <div className={`inline-block px-3 py-1 rounded-full bg-gradient-to-r ${item.gradient} text-white text-xs font-manrope font-medium`}>
+                    <Badge className={`bg-gradient-to-r ${item.gradient} text-white font-manrope font-medium shadow-lg`}>
                       {item.category}
-                      {item.featured && (
-                        <span className="ml-2">✦</span>
-                      )}
-                    </div>
+                    </Badge>
                   </div>
+                  {item.featured && (
+                    <div className="absolute top-4 right-4">
+                      <Badge className="bg-accent-gold text-black font-manrope font-medium shadow-lg">
+                        Featured
+                      </Badge>
+                    </div>
+                  )}
                 </div>
 
-                {/* Card Content */}
+                {/* Project Content */}
                 <div className="p-6 flex flex-col flex-grow">
-                  {/* Project Title */}
-                  <h3 className="font-manrope text-xl font-bold text-foreground mb-3">
+                  {/* Title */}
+                  <h3 className="font-manrope text-xl font-bold text-foreground mb-3 group-hover:text-teal transition-colors duration-300">
                     {item.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="font-manrope text-muted-foreground mb-4 flex-grow line-clamp-3">
+                  <p className="font-manrope text-muted-foreground mb-4 text-sm leading-relaxed flex-grow">
                     {item.description}
                   </p>
 
-                  {/* Technologies */}
-                  <div className="mb-6">
-                    <h4 className="font-manrope text-sm font-semibold text-foreground mb-3 uppercase tracking-wide">
-                      Technologies
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {item.tech.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="px-3 py-1 bg-muted rounded-full text-xs font-manrope text-muted-foreground"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {item.tech.map((tech, techIndex) => (
+                      <Badge key={techIndex} variant="outline" className="font-manrope text-xs">
+                        {tech}
+                      </Badge>
+                    ))}
                   </div>
 
                   {/* Action Button */}
@@ -273,51 +259,56 @@ const Portfolio = () => {
               </div>
             ))}
           </div>
-
-          {/* No Results Message */}
-          {filteredItems.length === 0 && (
-            <div className="text-center py-12">
-              <div className="text-muted-foreground mb-4">
-                <Filter className="w-12 h-12 mx-auto" />
-              </div>
-              <h3 className="font-manrope text-xl font-semibold text-foreground mb-2">
-                No projects found
-              </h3>
-              <p className="font-manrope text-muted-foreground max-w-md mx-auto">
-                Try adjusting your search term or filters to find what you're looking for.
-              </p>
-              <Button
-                variant="outline"
-                className="mt-4 font-manrope"
-                onClick={() => {
-                  setSearchTerm("");
-                  setSelectedCategory("All");
-                  setSelectedStyle("All");
-                }}
-              >
-                Clear Filters
-              </Button>
-            </div>
-          )}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 px-8 bg-skin-beige dark:bg-gray-900">
+      <section className="py-24 px-8 bg-teal dark:bg-electric-blue text-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 mb-4">
+                <TrendingUp className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="font-manrope text-3xl font-bold">$16M+</h3>
+              <p className="font-manrope text-white/90">Incremental Revenue Generated</p>
+            </div>
+            
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 mb-4">
+                <Zap className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="font-manrope text-3xl font-bold">&lt; 3 Weeks</h3>
+              <p className="font-manrope text-white/90">Average Delivery Time</p>
+            </div>
+            
+            <div className="text-center space-y-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/10 mb-4">
+                <Users className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="font-manrope text-3xl font-bold">100+</h3>
+              <p className="font-manrope text-white/90">Successful Projects</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Project CTA Section */}
+      <section className="py-16 px-8 bg-skin-beige dark:bg-gray-900">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-manrope text-4xl font-bold text-foreground mb-6">
-            Ready to Create Your Success Story?
+          <h2 className="font-manrope text-3xl font-bold text-foreground mb-4">
+            Ready to Start Your Project?
           </h2>
-          <p className="font-manrope text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join our portfolio of successful clients and transform your business with our premium solutions
+          <p className="font-manrope text-lg text-muted-foreground mb-8">
+            Let's bring your vision to life with our proven expertise
           </p>
           
           <Button className="bg-gradient-neon text-white px-8 py-3 rounded-lg font-manrope font-medium hover:shadow-neon transition-all duration-300">
-            Start Your Project
-            <ExternalLink className="ml-2 h-5 w-5" />
+            Get Started Today
           </Button>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

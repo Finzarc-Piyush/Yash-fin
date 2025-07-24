@@ -2,6 +2,7 @@ import { ServiceCard } from "@/components/ServiceCard";
 import aiAutomationImg from "@/assets/ai-automation.jpg";
 import webDevelopmentImg from "@/assets/web-development.jpg";
 import dataAnalyticsImg from "@/assets/data-analytics.jpg";
+import { Footer } from "@/components/Footer";
 
 const Services = () => {
   const services = [
@@ -110,6 +111,7 @@ const Services = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { MapPin, Mail, Phone, Clock, Send, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Footer } from "@/components/Footer";
 
 const Contact = () => {
   const contactInfo = [
@@ -275,6 +276,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
