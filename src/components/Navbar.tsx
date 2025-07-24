@@ -25,14 +25,14 @@ export function Navbar() {
       color: "bg-black"
     },
     {
-      name: "Finzarc WebCraft",
+      name: "AI-APPS WebCraft",
       icon: <Globe className="h-8 w-8 mb-3 text-white bg-black/60 rounded-full p-1 mx-auto" />,
       summary: "Modern web development for scalable, high-performance digital experiences.",
       link: "/services#webcraft",
       color: "bg-black"
     },
     {
-      name: "Finzarc Data Science",
+      name: "AI-APPS Data Science",
       icon: <Cpu className="h-8 w-8 mb-3 text-white bg-black/60 rounded-full p-1 mx-auto" />,
       summary: "Data analytics and machine learning to unlock actionable business insights.",
       link: "/services#data-science",
@@ -47,7 +47,7 @@ export function Navbar() {
         <Link to="/" className="flex items-center space-x-2">
           <Zap className="h-6 w-6 text-black" />
           <span className="font-manrope text-sm text-black uppercase tracking-widest font-bold">
-            FINZARC
+            AI-APPS
           </span>
         </Link>
 

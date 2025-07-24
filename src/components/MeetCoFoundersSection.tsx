@@ -1,21 +1,19 @@
 import React from "react";
 import ProfileCard from "../../y/ProfileCard/ProfileCard.jsx";
 import "../../y/ProfileCard/ProfileCard.css";
-import abhinavImg from "../assets/images/abhinav.png";
-import piyushImg from "../assets/images/piyush.png";
 
 const coFounders = [
   {
     name: "Abhinav Tripathi",
     title: "Co-Founder & CTO",
-    image: abhinavImg,
-    linkedin: "https://www.linkedin.com/in/thetripathi/",
+    avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&q=80",
+    linkedin: "https://www.linkedin.com/in/abhinav-singh-ai-apps/",
   },
   {
     name: "Piyush Kumar",
     title: "Co-Founder & CEO",
-    image: piyushImg,
-    linkedin: "https://www.linkedin.com/in/piyush-finzarc/",
+    avatarUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face&q=80",
+    linkedin: "https://www.linkedin.com/in/piyush-ai-apps/",
   },
 ];
 
@@ -26,13 +24,13 @@ export const MeetCoFoundersSection: React.FC = () => (
         Meet Our Co-Founders
       </h2>
       <p className="font-manrope text-xl text-muted-foreground mb-10 text-center">
-        Visionaries leading Finzarc’s journey of innovation and impact
+        Visionaries leading AI-APPS's journey of innovation and impact
       </p>
       <div className="flex flex-col md:flex-row gap-12 md:gap-32 justify-center items-center w-full">
         {coFounders.map((founder) => (
           <div key={founder.name} className="relative w-[320px] h-[420px] flex flex-col items-center">
             <ProfileCard
-              avatarUrl={founder.image}
+              avatarUrl={founder.avatarUrl}
               name={founder.name}
               title={founder.title}
               showUserInfo={false}

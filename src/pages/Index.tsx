@@ -55,29 +55,43 @@ const Index = () => {
     <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Hero Section with Video Background */}
       <section className="relative h-[90vh] md:h-screen w-full overflow-hidden">
-        {/* Video Background */}
-        <div className="absolute inset-0">
+        {/* Background with gradient fallback */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-slate-900 to-black">
+          {/* Video Background */}
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover opacity-80"
             style={{ objectPosition: 'center center' }}
+            onError={(e) => {
+              // Hide video if it fails to load
+              const target = e.target as HTMLVideoElement;
+              target.style.display = 'none';
+            }}
           >
             <source 
               src="https://res.cloudinary.com/dpe5a0j6g/video/upload/v1752554492/Finzarc_Hero_1080p_ij1kfn.mp4" 
               type="video/mp4" 
             />
           </video>
-          <div className="absolute inset-0 bg-black/40" />
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-black/60" />
+          {/* Animated particles effect */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-teal rounded-full animate-pulse"></div>
+            <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-neon-pink rounded-full animate-ping"></div>
+            <div className="absolute bottom-1/4 left-1/3 w-1.5 h-1.5 bg-yellow-400 rounded-full animate-pulse"></div>
+            <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-teal rounded-full animate-ping"></div>
+          </div>
         </div>
 
         {/* Hero Content - Left Side */}
         <div className="relative z-10 max-w-2xl pt-32 md:pt-40 px-4 sm:px-8">
           <div className="space-y-6">
             <h1 className="font-futura text-4xl sm:text-5xl md:text-6xl text-white tracking-tight leading-[1.1] uppercase">
-              FINZARC
+              AI-APPS
             </h1>
             <p className="font-manrope text-base sm:text-lg text-white/90 font-normal max-w-lg">
               Marketing Automation · WebApp Dev · Data Science & Analytics
@@ -103,7 +117,7 @@ const Index = () => {
         </div>
         <div className="absolute bottom-4 right-4 sm:right-6">
           <p className="font-manrope text-xs text-white/80">
-            ©️ FINZARC
+            ©️ AI-APPS
           </p>
         </div>
       </section>
