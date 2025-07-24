@@ -4,13 +4,13 @@ import "../../y/ProfileCard/ProfileCard.css";
 
 const coFounders = [
   {
-    name: "Abhinav Tripathi",
+    name: "John",
     title: "Co-Founder & CTO",
     avatarUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face&q=80",
     linkedin: "https://www.linkedin.com/in/abhinav-singh-ai-apps/",
   },
   {
-    name: "Piyush Kumar",
+    name: "Maze",
     title: "Co-Founder & CEO",
     avatarUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face&q=80",
     linkedin: "https://www.linkedin.com/in/piyush-ai-apps/",
